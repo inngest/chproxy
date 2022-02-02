@@ -226,43 +226,43 @@ func TestDecompression(t *testing.T) {
 				return nil
 			},
 		},
-		{
-			"full ZSTD",
-			zstdTestQuery,
-			func(req *http.Request) error {
-				q, err := getFullQuery(req)
-				if err != nil {
-					return err
-				}
-				checkResponse(t, req.Body, zstdTestQuery)
-				if string(q) != testQuery {
-					return fmt.Errorf("got: %q; expected %q", string(q), testQuery)
-				}
-				return nil
-			},
-		},
-		{
-			"snippet ZSTD",
-			zstdTestQuery,
-			func(req *http.Request) error {
-				q := getQuerySnippet(req)
-				if q[:100] != string(testQuery[:100]) {
-					return fmt.Errorf("got: %q; expected: %q", q[:100], testQuery[:100])
-				}
-				return nil
-			},
-		},
-		{
-			"partial ZSTD",
-			zstdTestQuery + "foobar", // write whatever to buf to make the data partially invalid
-			func(req *http.Request) error {
-				q := getQuerySnippet(req)
-				if q[:50] != testQuery[:50] {
-					return fmt.Errorf("got: %q; expected: %q", q[:50], testQuery[:50])
-				}
-				return nil
-			},
-		},
+		// {
+		// 	"full ZSTD",
+		// 	zstdTestQuery,
+		// 	func(req *http.Request) error {
+		// 		q, err := getFullQuery(req)
+		// 		if err != nil {
+		// 			return err
+		// 		}
+		// 		checkResponse(t, req.Body, zstdTestQuery)
+		// 		if string(q) != testQuery {
+		// 			return fmt.Errorf("got: %q; expected %q", string(q), testQuery)
+		// 		}
+		// 		return nil
+		// 	},
+		// },
+		// {
+		// 	"snippet ZSTD",
+		// 	zstdTestQuery,
+		// 	func(req *http.Request) error {
+		// 		q := getQuerySnippet(req)
+		// 		if q[:100] != string(testQuery[:100]) {
+		// 			return fmt.Errorf("got: %q; expected: %q", q[:100], testQuery[:100])
+		// 		}
+		// 		return nil
+		// 	},
+		// },
+		// {
+		// 	"partial ZSTD",
+		// 	zstdTestQuery + "foobar", // write whatever to buf to make the data partially invalid
+		// 	func(req *http.Request) error {
+		// 		q := getQuerySnippet(req)
+		// 		if q[:50] != testQuery[:50] {
+		// 			return fmt.Errorf("got: %q; expected: %q", q[:50], testQuery[:50])
+		// 		}
+		// 		return nil
+		// 	},
+		// },
 	}
 
 	for _, tc := range testCases {

@@ -36,7 +36,7 @@ func TestRead(t *testing.T) {
 
 	for _, tc := range testCases {
 		testDecompress(t, tc.lz4, tc.expected)
-		testDecompress(t, tc.zstd, tc.expected)
+		// testDecompress(t, tc.zstd, tc.expected)
 	}
 }
 
